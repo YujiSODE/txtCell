@@ -60,7 +60,6 @@ function txtCell(dataName,wkScrpt,map1,map2){
   };
   //============================================================================
   bd.id='body'+r9;
-  //Data=!Data?'123456789':Data;
   Div=f('div','txtCell'+r9,bd.id),bd.removeAttribute('id');
   Name=f('p','pName'+r9,Div.id),Name.innerHTML='\"'+dataName+'\":\"'+wkScrpt+'\"';
   pStep=f('p','pStep'+r9,Div.id),pStep.innerHTML='step:0';
@@ -80,14 +79,12 @@ function txtCell(dataName,wkScrpt,map1,map2){
     pStep.innerHTML='step:'+step;
     if(dStep<max){
       wkMsg(_Map);
-      //W.postMessage(_Map);
     }else{
       //resetting parameters
       dStep=0,max=0;
     }
   },true);
-  //=== returned ===
-  //return function(){return _Log;};
+  //=== returned function ===
   F=function(){return _Log;};
   F.run=function(maxStep){
     maxStep=/^[1-9](?:[0-9]+)?$/.test(maxStep)?maxStep:1;

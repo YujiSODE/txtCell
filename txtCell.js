@@ -12,8 +12,13 @@
 * - wkScrpt: a filename of a script for Web Worker.
 * - [optional] map1 and map2: map data.
 *   map data = 'xxx...x@xxx...x@...'; x is integer between 0 to 9.
-*=== returned function ===
-*
+*=== Returned function ===
+* - function(): function that returns Log object.
+*   Log object has following values
+*   - map0: initial data map.
+*   - map1: the current data map.
+*   - map2: second data map.
+*   - step: the current step.
 * === List of wkScrpt ===
 * - "overflow simulation with +1": 'txtCell_+1.js'
 * - "Conway's Game of Life": './txtCell_lifeGame.js'

@@ -21,19 +21,20 @@
 *   - step: the current step.
 *=== Method of returned function ===
 * - function run(maxStep): it simulates only "maxStep" steps.
-* === List of wkScrpt ===
+* === List of scripts for Web Worker ===
 * - "Conway's Game of Life": './txtCell_lifeGame.js'
 */
 //============================================================================
 function txtCell(dataName,wkScrpt,map1,map2){
   var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
       bd=slf.document.getElementsByTagName('body')[0],
-      dataN=0,I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0},
-      Div,Name,pStep,I=0,J=0,P,pRnd=0,mp=[],mpN=0,mpM=0,pSt,step=0,dStep=0,max=0,tId,F;
+      I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0},
+      Div,Name,pStep,I=0,J=0,P,pRnd=0,step=0,dStep=0,max=0,tId,F,
+      f,dMap,wkMsg;
   //element generator
-  var f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
+  f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
   //data mapping function that returns mapped data
-  var dMap=function(d){
+  dMap=function(d){
     if(!d){
       //d=false: default random map with 0 or 1 (n x n data)
       var n=slf.prompt('n x n data; n is between 2 to 10: n=?',3);
@@ -55,8 +56,8 @@ function txtCell(dataName,wkScrpt,map1,map2){
     return P.innerHTML.replace(/<br>/g,'@');
   };
   //function that a posts message to web worker
-  var wkMsg=function(v){
-      tId=slf.setTimeout(function(){W.postMessage(v);},1000);
+  wkMsg=function(v){
+    tId=slf.setTimeout(function(){W.postMessage(v);},150);
   };
   //============================================================================
   bd.id='body'+r9;
@@ -94,5 +95,5 @@ function txtCell(dataName,wkScrpt,map1,map2){
   return F;
 }
 //=== examples ===
-var y=txtCell('sample','txtCell_lifeGame.js');
-//var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');
+//var y=txtCell('sample','txtCell_lifeGame.js');
+var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');

@@ -36,8 +36,9 @@ function txtCell(dataName,wkScrpt,map1,map2){
   var dMap=function(d){
     if(!d){
       //d=false: default random map with 0 or 1 (n x n data)
-      var n=slf.prompt('n x n data: n=?',3);
-      n=/^[1-9](?:[0-9]+)?$/.test(n)?+n:3;
+      var n=slf.prompt('n x n data; n is between 2 to 10: n=?',3);
+      n=/^[1-9]+$/.test(n)?+n:3;
+      n=(+n<2||+n>10)?3:n;
       I=0;
       while(I<n){
         J=0;
@@ -75,7 +76,6 @@ function txtCell(dataName,wkScrpt,map1,map2){
   W.addEventListener('error',function(e){console.log(e.message),W.terminate();},true);
   W.addEventListener('message',function(e){
     //e.data='xxx...x@xxx...x@...'; x is integer between 0 to 9
-    //P.innerHTML=e.data.replace(/@/g,'<br>'),step+=1,dStep+=1;
     _Map=dMap(e.data),_Log.map1=_Map,step+=1,dStep+=1,_Log.step+=1;
     pStep.innerHTML='step:'+step;
     if(dStep<max){
@@ -92,7 +92,6 @@ function txtCell(dataName,wkScrpt,map1,map2){
   F.run=function(maxStep){
     maxStep=/^[1-9](?:[0-9]+)?$/.test(maxStep)?maxStep:1;
     max=maxStep;
-    //W.postMessage(P.innerHTML.replace(/<br>/g,'@'));
     wkMsg(P.innerHTML.replace(/<br>/g,'@'));
   };
   return F;

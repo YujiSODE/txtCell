@@ -17,7 +17,7 @@
 *   Log object has following values:
 *   - map0: initial data map.
 *   - map1: the current data map.
-*   - map2: second data map.
+*   - map2: additional data map.
 *   - step: the current step.
 *=== Method of returned function ===
 * - function run(maxStep): it simulates only "maxStep" steps.

@@ -57,7 +57,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
   };
   //function that a posts message to web worker
   wkMsg=function(v){
-    tId=slf.setTimeout(function(){W.postMessage(v);},150);
+    tId=slf.setTimeout(function(){W.postMessage(v);},90);
   };
   //============================================================================
   bd.id='body'+r9;
@@ -80,7 +80,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
     _Map=dMap(e.data),_Log.map1=_Map,step+=1,dStep+=1,_Log.step+=1;
     pStep.innerHTML='step:'+step;
     if(dStep<max){
-      wkMsg(_Map);
+      wkMsg([_Map,map2]);
     }else{
       //resetting parameters
       dStep=0,max=0;
@@ -91,7 +91,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
   F.run=function(maxStep){
     maxStep=/^[1-9](?:[0-9]+)?$/.test(maxStep)?maxStep:1;
     max=maxStep;
-    wkMsg(P.innerHTML.replace(/<br>/g,'@'));
+    wkMsg([P.innerHTML.replace(/<br>/g,'@'),map2]);
   };
   return F;
 }

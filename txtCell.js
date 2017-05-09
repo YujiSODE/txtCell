@@ -71,6 +71,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
   _Map=dMap(map1);
   _Log.map0=_Map;
   _Log.map1=_Map;
+  _Log.map2=map2;
   //=== worker event ===
   W=new Worker('./'+wkScrpt);
   W.addEventListener('error',function(e){console.log(e.message),W.terminate();},true);

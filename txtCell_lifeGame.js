@@ -40,7 +40,6 @@ slf.addEventListener('message',function(e){
       c.c6=(Y!=H-1&&X!=0)?+d[Y+1][X-1]:0;
       c.c7=(Y!=H-1)?+d[Y+1][X]:0;
       c.c8=(Y!=H-1&&X!=W-1)?+d[Y+1][X+1]:0;
-      /*=== "Conway's Game of Life" ===*/
       i=1,s=0;
       while(i<9){
         s+=+c['c'+i]>0?1:0,i+=1;

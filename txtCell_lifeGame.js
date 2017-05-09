@@ -21,8 +21,10 @@ var slf=this,
 //=== message event ===
 slf.addEventListener('message',function(e){
   //e.data='xxx...x@xxx...x@...'; x is integer between 0 to 9
-  var d=e.data.split(/@/),P=[],H=0,W=0,Y=0,X=0,i=1,s=0;
-  W=d[0].length,H=d.length;
+  //d1 and d2: map1 and map2
+  var d1=e.data[0].split(/@/),d2=!e.data[1]?undefined:e.data[1].split(/@/),
+      P=[],H=0,W=0,Y=0,X=0,i=1,s=0;
+  W=d1[0].length,H=d1.length;
   while(Y<H){
     X=0,P[Y]='';
     while(X<W){
@@ -31,16 +33,15 @@ slf.addEventListener('message',function(e){
       * [c4|c0|c5]
       * [c6|c7|c8]
       */
-      c.c0=+d[Y][X];
-      c.c1=(Y!=0&&X!=0)?+d[Y-1][X-1]:0;
-      c.c2=(Y!=0)?+d[Y-1][X]:0;
-      c.c3=(Y!=0&&X!=W-1)?+d[Y-1][X+1]:0;
-      c.c4=(X!=0)?+d[Y][X-1]:0;
-      c.c5=(X!=W-1)?+d[Y][X+1]:0;
-      c.c6=(Y!=H-1&&X!=0)?+d[Y+1][X-1]:0;
-      c.c7=(Y!=H-1)?+d[Y+1][X]:0;
-      c.c8=(Y!=H-1&&X!=W-1)?+d[Y+1][X+1]:0;
-      /*=== "Conway's Game of Life" ===*/
+      c.c0=+d1[Y][X];
+      c.c1=(Y!=0&&X!=0)?+d1[Y-1][X-1]:0;
+      c.c2=(Y!=0)?+d1[Y-1][X]:0;
+      c.c3=(Y!=0&&X!=W-1)?+d1[Y-1][X+1]:0;
+      c.c4=(X!=0)?+d1[Y][X-1]:0;
+      c.c5=(X!=W-1)?+d1[Y][X+1]:0;
+      c.c6=(Y!=H-1&&X!=0)?+d1[Y+1][X-1]:0;
+      c.c7=(Y!=H-1)?+d1[Y+1][X]:0;
+      c.c8=(Y!=H-1&&X!=W-1)?+d1[Y+1][X+1]:0;
       i=1,s=0;
       while(i<9){
         s+=+c['c'+i]>0?1:0,i+=1;
@@ -51,5 +52,5 @@ slf.addEventListener('message',function(e){
     Y+=1;
   }
   slf.postMessage(P.join('@'));
-  d=P=H=W=Y=X=i=s=null;
+  d1=d2=P=H=W=Y=X=i=s=null;
 },true);

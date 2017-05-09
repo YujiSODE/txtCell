@@ -17,27 +17,29 @@
 *   Log object has following values:
 *   - map0: initial data map.
 *   - map1: the current data map.
-*   - map2: second data map.
+*   - map2: additional data map.
 *   - step: the current step.
 *=== Method of returned function ===
 * - function run(maxStep): it simulates only "maxStep" steps.
-* === List of wkScrpt ===
+* === List of scripts for Web Worker ===
 * - "Conway's Game of Life": './txtCell_lifeGame.js'
 */
 //============================================================================
 function txtCell(dataName,wkScrpt,map1,map2){
   var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
       bd=slf.document.getElementsByTagName('body')[0],
-      dataN=0,I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0},
-      Div,Name,pStep,I=0,J=0,P,pRnd=0,mp=[],mpN=0,mpM=0,pSt,step=0,dStep=0,max=0,tId,F;
+      I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0},
+      Div,Name,pStep,I=0,J=0,P,pRnd=0,step=0,dStep=0,max=0,tId,F,
+      f,dMap,wkMsg;
   //element generator
-  var f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
+  f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
   //data mapping function that returns mapped data
-  var dMap=function(d){
+  dMap=function(d){
     if(!d){
       //d=false: default random map with 0 or 1 (n x n data)
-      var n=slf.prompt('n x n data: n=?',3);
-      n=/^[1-9](?:[0-9]+)?$/.test(n)?+n:3;
+      var n=slf.prompt('n x n data; n is between 2 to 10: n=?',3);
+      n=/^[1-9]+$/.test(n)?+n:3;
+      n=(+n<2||+n>10)?3:n;
       I=0;
       while(I<n){
         J=0;
@@ -54,12 +56,11 @@ function txtCell(dataName,wkScrpt,map1,map2){
     return P.innerHTML.replace(/<br>/g,'@');
   };
   //function that a posts message to web worker
-  var wkMsg=function(v){
-      tId=slf.setTimeout(function(){W.postMessage(v);},1000);
+  wkMsg=function(v){
+    tId=slf.setTimeout(function(){W.postMessage(v);},90);
   };
   //============================================================================
   bd.id='body'+r9;
-  //Data=!Data?'123456789':Data;
   Div=f('div','txtCell'+r9,bd.id),bd.removeAttribute('id');
   Name=f('p','pName'+r9,Div.id),Name.innerHTML='\"'+dataName+'\":\"'+wkScrpt+'\"';
   pStep=f('p','pStep'+r9,Div.id),pStep.innerHTML='step:0';
@@ -70,33 +71,30 @@ function txtCell(dataName,wkScrpt,map1,map2){
   _Map=dMap(map1);
   _Log.map0=_Map;
   _Log.map1=_Map;
+  _Log.map2=map2;
   //=== worker event ===
   W=new Worker('./'+wkScrpt);
   W.addEventListener('error',function(e){console.log(e.message),W.terminate();},true);
   W.addEventListener('message',function(e){
     //e.data='xxx...x@xxx...x@...'; x is integer between 0 to 9
-    //P.innerHTML=e.data.replace(/@/g,'<br>'),step+=1,dStep+=1;
     _Map=dMap(e.data),_Log.map1=_Map,step+=1,dStep+=1,_Log.step+=1;
     pStep.innerHTML='step:'+step;
     if(dStep<max){
-      wkMsg(_Map);
-      //W.postMessage(_Map);
+      wkMsg([_Map,map2]);
     }else{
       //resetting parameters
       dStep=0,max=0;
     }
   },true);
-  //=== returned ===
-  //return function(){return _Log;};
+  //=== returned function ===
   F=function(){return _Log;};
   F.run=function(maxStep){
     maxStep=/^[1-9](?:[0-9]+)?$/.test(maxStep)?maxStep:1;
     max=maxStep;
-    //W.postMessage(P.innerHTML.replace(/<br>/g,'@'));
-    wkMsg(P.innerHTML.replace(/<br>/g,'@'));
+    wkMsg([P.innerHTML.replace(/<br>/g,'@'),map2]);
   };
   return F;
 }
 //=== examples ===
-var y=txtCell('sample','txtCell_lifeGame.js');
-//var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');
+//var y=txtCell('sample','txtCell_lifeGame.js');
+var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');

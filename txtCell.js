@@ -8,138 +8,95 @@
 */
 //the interface for text based Cellular Automaton.
 /*=== Parameters ===
-* tagId: id of target tag
-* N: size of a data set
-* Data: numerical text data; e.g., '123456789'
-* dataName: name of the whole data set
-* wkScrpt: a text formatted file path to a script for Web Worker
-* map: optional map data
-*/
-/* === List of wkScrpt ===
-* - "overflow simulation with +1": 'txtCell_+1.js'
+* - dataName: name of a data set.
+* - wkScrpt: a filename of a script for Web Worker.
+* - [optional] map1 and map2: map data.
+*   map data = 'xxx...x@xxx...x@...'; x is integer between 0 to 9.
+*=== Returned function ===
+* - function(): function that returns Log object.
+*   Log object has following values:
+*   - map0: initial data map.
+*   - map1: the current data map.
+*   - map2: second data map.
+*   - step: the current step.
+*=== Method of returned function ===
+* - function run(maxStep): it simulates only "maxStep" steps.
+* === List of wkScrpt ===
 * - "Conway's Game of Life": './txtCell_lifeGame.js'
 */
-/*=== returned object: {run(),v0(),log(),close()} ===
-* run(max): it runs system for max-steps; a step as default.
-* v0(): it returns initial condition.
-* log(): it returns the current log.
-* close(): it closes this interface.
-*/
 //============================================================================
-function txtCell(tagId,N,Data,dataName,wkScrpt,map){
-  //_step0[0]: initial condition of given data
-  //_step0[1]: initial condition of map data
-  if(N<1){throw new Error('N<1');}
-  var slf=window,Wk,dataN=0,I=0,map0='0',_step0=[],
-      r9=slf.Math.random().toFixed(9).replace(/\./g,''),
-      Div,Name,R,P,fontSize=0,mpName,mp,csTxt,pSt,step=0,dStep=0,maxStep=0,tId;
+function txtCell(dataName,wkScrpt,map1,map2){
+  var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
+      bd=slf.document.getElementsByTagName('body')[0],
+      dataN=0,I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0},
+      Div,Name,pStep,I=0,J=0,P,pRnd=0,mp=[],mpN=0,mpM=0,pSt,step=0,dStep=0,max=0,tId,F;
   //element generator
-  var f=function(elName,elId,targetId){
-    var t=slf.document.getElementById(targetId),
-        E=slf.document.createElement(elName);
-    E.id=elId;
-    return t.appendChild(E);
+  var f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
+  //data mapping function that returns mapped data
+  var dMap=function(d){
+    if(!d){
+      //d=false: default random map with 0 or 1 (n x n data)
+      var n=slf.prompt('n x n data: n=?',3);
+      n=/^[1-9](?:[0-9]+)?$/.test(n)?+n:3;
+      I=0;
+      while(I<n){
+        J=0;
+        while(J<n){
+          pRnd=Math.floor(2*Math.random());
+          P.innerHTML+=J<n-1?pRnd:(I<n-1?pRnd+'<br>':pRnd),J+=1;
+        }
+        I+=1;
+      }
+    }else{
+      //d='xxx...x@xxx...x@...'; x is integer between 0 to 9
+      P.innerHTML=d.replace(/@/g,'<br>');
+    }
+    return P.innerHTML.replace(/<br>/g,'@');
   };
   //function that a posts message to web worker
-  var wkMsg=function(){
-    if(dStep<maxStep){
-      tId=setTimeout(function(){Wk.postMessage(N+'@'+P.innerHTML+'@'+mp.innerHTML),tId=null;},1000);
-    }else{
-      Wk.removeEventListener('message',wkMsg,true),dStep=0;
-    }
+  var wkMsg=function(v){
+      tId=slf.setTimeout(function(){W.postMessage(v);},1000);
   };
   //============================================================================
-  Data=!Data?'123456789':Data;
-  Div=f('div','div'+r9,tagId);
-  Name=f('p','pName'+r9,Div.id).innerHTML=dataName;
-  R=f('p','pResult'+r9,Div.id);
-  R.innerHTML='\"'+wkScrpt+'\" step:0';
+  bd.id='body'+r9;
+  //Data=!Data?'123456789':Data;
+  Div=f('div','txtCell'+r9,bd.id),bd.removeAttribute('id');
+  Name=f('p','pName'+r9,Div.id),Name.innerHTML='\"'+dataName+'\":\"'+wkScrpt+'\"';
+  pStep=f('p','pStep'+r9,Div.id),pStep.innerHTML='step:0';
   //=== data mapping ===
   P=f('p','p'+r9,Div.id);
-  P.innerHTML=Data.replace(/[^0-9]/g,0);
-  _step0[0]=P.innerHTML;
-  dataN=P.innerHTML.length;
-  if(!map){
-    while(I<dataN-1){
-      map0+='0',I+=1;
-    }
-  }
-  fontSize=slf.getComputedStyle(P,null)['font-size'].replace(/px/g,'');
+  P.style.cssText='overflow:scroll;width:30vw;height:30vh;border:1px dashed #000f;';
   //=== map data ===
-  mpName=f('p','pName'+r9,Div.id).innerHTML='Map';
-  mp=f('p','mp'+r9,Div.id);
-  mp.innerHTML=!map?map0:map.replace(/[^0-9]/g,0);
-  _step0[1]=mp.innerHTML;
-  //=== value for cssText ===
-  csTxt='color:rgba(0,0,255,1);word-break:break-all;letter-spacing:0.5em;';
-  csTxt+='width:'+((N+1)*fontSize)+'px;';
-  P.style.cssText=csTxt;
-  mp.style.cssText=csTxt;
+  _Map=dMap(map1);
+  _Log.map0=_Map;
+  _Log.map1=_Map;
   //=== worker event ===
-  Wk=new Worker(wkScrpt);
-  Wk.addEventListener('error',function(e){
-    console.log(e.message),Wk.terminate();
-  },true);
-  Wk.addEventListener('message',function(e){
-    P.innerHTML=e.data,step+=1,dStep+=1;
-    R.innerHTML='\"'+wkScrpt+'\" step:'+step;
-  },true);
-  //=== returned object: {run(),v0(),log(),close()} ===
-  return {
-    run:function(max){
-      //max: max steps
-      if(!Div){throw new Error('there is no target <div>');}
-      maxStep=(!max||max<0)?1:max;
-      Wk.addEventListener('message',wkMsg,true);
-      wkMsg();
-    },
-    v0:function(){
-      //this returns initial condition
-      if(!Div){throw new Error('there is no target <div>');}
-      return {Name:Name,initialData:_step0[0],dataWidth:N,initialMap:_step0[1],script:wkScrpt};
-    },
-    log:function(){
-      if(!Div){throw new Error('there is no target <div>');}
-      var i=0,d=P.innerHTML,n=d.length,o={};
-      while(i<10){o[i]=0,i+=1;}
-      o.step=step;
-      /*o.data="dataWidth@Data@map"*/
-      o.data=N+'@'+P.innerHTML+'@'+mp.innerHTML;
-      i=0;
-      while(i<n){o[d[i]]+=1,i+=1;}
-      return o;
-    },
-    close:function(){
-      if(!Div){throw new Error('there is no target <div>');}
-      if(!!tId){slf.clearTimeout(tId)}
-      var r=Div.parentNode.removeChild(Div);
-      r=slf=Wk=dataN=I=map0=_step0=r9=Div=Name=R=P=fontSize=mpName=mp=csTxt=pSt=step=tId=null;
+  W=new Worker('./'+wkScrpt);
+  W.addEventListener('error',function(e){console.log(e.message),W.terminate();},true);
+  W.addEventListener('message',function(e){
+    //e.data='xxx...x@xxx...x@...'; x is integer between 0 to 9
+    //P.innerHTML=e.data.replace(/@/g,'<br>'),step+=1,dStep+=1;
+    _Map=dMap(e.data),_Log.map1=_Map,step+=1,dStep+=1,_Log.step+=1;
+    pStep.innerHTML='step:'+step;
+    if(dStep<max){
+      wkMsg(_Map);
+      //W.postMessage(_Map);
+    }else{
+      //resetting parameters
+      dStep=0,max=0;
     }
+  },true);
+  //=== returned ===
+  //return function(){return _Log;};
+  F=function(){return _Log;};
+  F.run=function(maxStep){
+    maxStep=/^[1-9](?:[0-9]+)?$/.test(maxStep)?maxStep:1;
+    max=maxStep;
+    //W.postMessage(P.innerHTML.replace(/<br>/g,'@'));
+    wkMsg(P.innerHTML.replace(/<br>/g,'@'));
   };
+  return F;
 }
 //=== examples ===
-//var b=document.getElementsByTagName('body')[0];
-//b.id='btg';
-//===
-//var y=txtCell(b.id,3,'123456789','test','./txtCell_+1.js');
-//var y=txtCell(b.id,3,'010111010000','test','./txtCell_+1.js','123456789');
-//var y=txtCell(b.id,5,['10101','01010','10101','01010','10101'].join(''),'test','./txtCell_lifeGame.js');
-/*=== <Some patterns of "Conway's Game of Life"> ===
-* These pattern examples are derived from:
-* Schiff, J., L. 2008. Cellular Automata: A Discrete View of the World. John Wiley & Sons, Inc.
-* Japanese language edition by Umeno, H. and Peper, F. 2011. Kyoritsu Shuppan Co., LTD.
-*/
-//var y=txtCell(b.id,3,'000111000',Date().replace(/\s/g,'_'),'./txtCell_lifeGame.js','123456789');
-//var y=txtCell(b.id,3,'000333000',Date().replace(/\s/g,'_'),'./txtCell_lifeGame.js','123456789');
-//var y=txtCell(b.id,4,['0100','1001','1001','0010'].join(''),'test','./txtCell_lifeGame.js');
-//var y=txtCell(b.id,4,['0010','1100','0011','0100'].join(''),'test','./txtCell_lifeGame.js');
-//var y=txtCell(b.id,4,['1100','1000','0001','0011'].join(''),'test','./txtCell_lifeGame.js');
-//var y=txtCell(b.id,5,['11000','10100','00000','00101','00011'].join(''),'test','./txtCell_lifeGame.js');
-//var y=txtCell(b.id,7,['1100000','1010000','0000000','0010100','0000000','0000101','0000011'].join(''),'test','./txtCell_lifeGame.js');
-//var y=txtCell(b.id,8,['11000011','10100101','00111100','10100101','11000011'].join(''),'test','./txtCell_lifeGame.js');
-//var y=txtCell(b.id,8,['00110000','01001000','01011000','11010110','00001101','00000001','00001110','00001000'].join(''),'test','./txtCell_lifeGame.js');
-//=== </Some patterns of "Conway's Game of Life"> ===
-//y.run(3);
-//y.v0();
-//y.log();
-//y.close();
+var y=txtCell('sample','txtCell_lifeGame.js');
+//var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');

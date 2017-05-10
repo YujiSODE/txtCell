@@ -38,7 +38,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
     if(!d){
       //d=false: default random map with 0 or 1 (n x n data)
       var n=slf.prompt('n x n data; n is between 2 to 10: n=?',3);
-      n=/^[1-9]+$/.test(n)?+n:3;
+      n=/^[1-9]|(?:10)$/.test(n)?+n:3;
       n=(+n<2||+n>10)?3:n;
       I=0;
       while(I<n){
@@ -57,7 +57,13 @@ function txtCell(dataName,wkScrpt,map1,map2){
   };
   //function that a posts message to web worker
   wkMsg=function(v){
-    tId=slf.setTimeout(function(){W.postMessage(v);},90);
+    /*
+    * max > 1000: dt = 10 millisecond
+    * max > 100: dt = 50 millisecond
+    * max > 0: dt = 250 millisecond
+    */
+    var dt=max>100?(max>1000?10:50):250;
+    tId=slf.setTimeout(function(){W.postMessage(v);},dt);
   };
   //============================================================================
   bd.id='body'+r9;
@@ -88,6 +94,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
   },true);
   //=== returned function ===
   F=function(){return _Log;};
+  //method to run simulation
   F.run=function(maxStep){
     maxStep=/^[1-9](?:[0-9]+)?$/.test(maxStep)?maxStep:1;
     max=maxStep;
@@ -96,5 +103,5 @@ function txtCell(dataName,wkScrpt,map1,map2){
   return F;
 }
 //=== examples ===
-//var y=txtCell('sample','txtCell_lifeGame.js');
-var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');
+var y=txtCell('sample','txtCell_lifeGame.js');
+//var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');

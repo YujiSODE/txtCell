@@ -35,6 +35,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
   f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
   //data mapping function that returns mapped data
   dMap=function(d){
+    //[optional] d='xxx...x@xxx...x@...'; x is integer between 0 to 9
     if(!d){
       //d=false: default random map with 0 or 1 (n x n data)
       var n=slf.prompt('n x n data; n is between 2 to 10: n=?',3);
@@ -103,5 +104,5 @@ function txtCell(dataName,wkScrpt,map1,map2){
   return F;
 }
 //=== examples ===
-var y=txtCell('sample','txtCell_lifeGame.js');
+//var y=txtCell('sample','txtCell_lifeGame.js');
 //var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');

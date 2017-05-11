@@ -12,27 +12,35 @@
 *=== Returned function ===
 * - function(): function that returns Log Object.
 *   Log object has following values:
-*   - map: used data map.
 *   - canvasId: id of target canvas tag.
+*     -----------------------------------
+*   - inputMap: input data map with method map2Cvs(map).
+*   - mapImage: data URI for input data map with method map2Cvs(map).
+*     -----------------------------------
+*   - outputMap: output data map with method cvs2Map().
+*   - abcd: parameters to convert image into mapdata with method cvs2Map().
+*     v=f(RGBa-value)=a*R+b*G+c*B+d*a.
 *=== Method of returned function ===
-* - function map2Cvs(map): method to convert map data into canvas image; "color chart" between blue(0) and red(9) is default output.
-*   map is map data.
+* - function map2Cvs(map): method to convert map data into canvas image; map is map data.
+*   "color chart" between blue(0) and red(9) is default output.
 * - function cvs2Map(): method to convert canvas image into map data.
-*=== Map data ===
+*=== Map data format ===
 * map data = 'xxx...x@xxx...x@...'; x is integer between 0 to 9.
 */
 //============================================================================
 //V=a*R+b*G+c*B+d*a
 function imgMap(canvasId){
+  canvasId=!canvasId?'img2Map_cvs':canvasId;
   var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
       cvs=slf.document.getElementById(canvasId),c,bd,
-      _Log={map:undefined,canvasId:canvasId},W=0,H=0,f,F,colorChart;
+      _Log={canvasId:canvasId,inputMap:undefined,mapImage:undefined,outputMap:undefined,abcd:undefined},
+      W=0,H=0,f,F,colorChart;
   //element generator
   f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
   //============================================================================
   if(!cvs){
     bd=slf.document.getElementsByTagName('body')[0],bd.id='bd'+r9;
-    cvs=f('canvas','img2Map_cvs'+r9,bd.id),bd.removeAttribute('id');
+    cvs=f('canvas',canvasId,bd.id),bd.removeAttribute('id');
   }
   c=cvs.getContext('2d');
   //returned function that returns Log Object
@@ -73,7 +81,7 @@ function imgMap(canvasId){
       i+=1;
     }
     img.data.set(arr);
-    c.putImageData(img,0,0),_Log.map=map;
+    c.putImageData(img,0,0),_Log.inputMap=map,_Log.mapImage=cvs.toDataURL();
   };
   //method to convert canvas image into map data
   F.cvs2Map=function(){};

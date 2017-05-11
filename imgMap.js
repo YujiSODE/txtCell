@@ -26,7 +26,7 @@
 function imgMap(canvasId){
   var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
       cvs=slf.document.getElementById(canvasId),c,bd,
-      _Log={map:undefined,canvasId:undefined},W=0,H=0,f,F,colorChart;
+      _Log={map:undefined,canvasId:canvasId},W=0,H=0,f,F,colorChart;
   //element generator
   f=function(elName,elId,targetId){var t=slf.document.getElementById(targetId),E=slf.document.createElement(elName);E.id=elId;return t.appendChild(E);};
   //============================================================================
@@ -73,7 +73,7 @@ function imgMap(canvasId){
       i+=1;
     }
     img.data.set(arr);
-    c.putImageData(img,0,0),_Log.map=map,_Log.canvasId=c.canvas.id;
+    c.putImageData(img,0,0),_Log.map=map;
   };
   //method to convert canvas image into map data
   F.cvs2Map=function(){};

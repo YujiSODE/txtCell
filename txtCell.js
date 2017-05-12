@@ -22,7 +22,7 @@
 *=== Method of returned function ===
 * - function run(maxStep): it simulates only "maxStep" steps.
 * === List of scripts for Web Worker ===
-* - "Conway's Game of Life": './txtCell_lifeGame.js'
+* - "Conway's Game of Life": 'txtCell_lifeGame.js'
 */
 //============================================================================
 function txtCell(dataName,wkScrpt,map1,map2){
@@ -80,7 +80,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
   _Log.map1=_Map;
   _Log.map2=map2;
   //=== worker event ===
-  W=new Worker('./'+wkScrpt);
+  W=new Worker(wkScrpt);
   W.addEventListener('error',function(e){console.log(e.message),W.terminate();},true);
   W.addEventListener('message',function(e){
     //e.data='xxx...x@xxx...x@...'; x is integer between 0 to 9

@@ -73,7 +73,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
   pStep=f('p','pStep'+r9,Div.id),pStep.innerHTML='step:0';
   //=== data mapping ===
   P=f('p','p'+r9,Div.id);
-  P.style.cssText='overflow:scroll;width:30vw;height:30vh;border:1px dashed #000f;';
+  P.style.cssText='overflow:scroll;width:25vw;height:25vh;border:1px dashed #000f;resize:both;';
   //=== map data ===
   _Map=dMap(map1);
   _Log.map0=_Map;

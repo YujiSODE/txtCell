@@ -8,8 +8,8 @@
 */
 //the interface for text based Cellular Automaton.
 /*=== Parameters ===
-* - dataName: name of a data set.
 * - wkScrpt: a filename of a script for Web Worker.
+* - [optional] dataName: name of a data set. timestamp is default value.
 * - [optional] map1 and map2: map data.
 *   map data = 'xxx...x@xxx...x@...'; x is integer between 0 to 9.
 *=== Returned function ===
@@ -25,7 +25,7 @@
 * - "Conway's Game of Life": 'txtCell_lifeGame.js'
 */
 //============================================================================
-function txtCell(dataName,wkScrpt,map1,map2){
+function txtCell(wkScrpt,dataName,map1,map2){
   var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
       bd=slf.document.getElementsByTagName('body')[0],
       I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0},
@@ -67,6 +67,7 @@ function txtCell(dataName,wkScrpt,map1,map2){
     tId=slf.setTimeout(function(){W.postMessage(v);},dt);
   };
   //============================================================================
+  dataName=!dataName?slf.Date():dataName;
   bd.id='body'+r9;
   Div=f('div','txtCell'+r9,bd.id),bd.removeAttribute('id');
   Name=f('p','pName'+r9,Div.id),Name.innerHTML='\"'+dataName+'\":\"'+wkScrpt+'\"';

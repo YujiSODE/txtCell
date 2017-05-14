@@ -26,6 +26,7 @@
 *   "color chart" between blue(0) and red(9) is default output.
 * - function cvs2Map(abcd): method to convert canvas image into map data.
 *   abcd is a text expressing values a, b, c, and d that satisfies v=f(RGBa-value)=a*R+b*G+c*B+d*a; e.g., "1011" means v=1*R+0*G+1*B+1*a.
+*   "1110" is default value.
 *=== Map data format ===
 * map data = 'xxx...x@xxx...x@...'; x is integer between 0 to 9.
 */

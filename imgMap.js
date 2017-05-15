@@ -31,16 +31,16 @@
 * map data = 'xxx...x@xxx...x@...'; x is integer between 0 to 9.
 */
 /* === Rank values ===
-* #0: 255*0.1=25.5
-* #1: 255*0.2=51
-* #2: 255*0.3=76.5
-* #3: 255*0.4=102
-* #4: 255*0.5=127.5
-* #5: 255*0.6=153
-* #6: 255*0.7=178.5
-* #7: 255*0.8=204
-* #8: 255*0.9=229.5
-* #9: 255*1.0=255
+* #0: 0
+* #1: +(255*0.1).toFixed(0)=26
+* #2: +(255*0.2).toFixed(0)+25=76
+* #3: +(255*0.3).toFixed(0)+25=102
+* #4: +(255*0.4).toFixed(0)+25=127
+* #5: +(255*0.5).toFixed(0)+25=153
+* #6: +(255*0.6).toFixed(0)+25=178
+* #7: +(255*0.7).toFixed(0)+25=204
+* #8: +(255*0.8).toFixed(0)+25=229
+* #9: 255
 */
 //============================================================================
 function imgMap(canvasId){
@@ -72,13 +72,13 @@ function imgMap(canvasId){
     img=c.createImageData(W,H);
     /*=== <generation of worker:map2Cvs> ===*/
     spt=[
-      'var slf=this,i=0,j=0,W='+W+',H='+H+',arr=[],Rank=[25.5,51,76.5,102,127.5,153,178.5,204,229.5,255],d;',
+      'var slf=this,i=0,j=0,W='+W+',H='+H+',arr=[],Rank=[0,26,76,102,127,153,178,204,229,255],d;',
       /*head part of eventlistener*/
       'slf.addEventListener(\'message\',function(e){d=e.data.split(/@/);',
       /*it converts map data into RGBa-data*/
       'while(i<H){j=0;',
       /*RGBa-value*/
-      'while(j<W){arr.push(Rank[d[i][j]]),arr.push(0),arr.push(255-Rank[d[i][j]]),arr.push(255),j+=1;}',
+      'while(j<W){if(Rank[d[i][j]]>0){arr.push(Rank[d[i][j]]),arr.push(0),arr.push(255-Rank[d[i][j]]),arr.push(255);}else{arr.push(0),arr.push(0),arr.push(0),arr.push(0);}j+=1;}',
       'i+=1;}',
       /*tail part of eventlistener*/
       'slf.postMessage(arr);slf=i=j=W=H=arr=Rank=d=null;},true);'
@@ -106,10 +106,11 @@ function imgMap(canvasId){
     /*=== <generation of worker:cvs2Map> ===*/
     spt=[
       'var slf=this,i=0,j=0,W='+W+',H='+H+',d,map=\'\',',
+      'v255s='+abcd[0]+abcd[1]+abcd[2]+abcd[3]+'*255;',
       'v255s='+abcd[0]+'*255+'+abcd[1]+'*255+'+abcd[2]+'*255+'+abcd[3]+'*255;',
       /*function returns Rank of a given array: A with index: idx*/
-      'f=function(A,idx){var v=(('+abcd[0]+'*A[idx]+'+abcd[1]+'*A[idx+1]+'+abcd[2]+'*A[idx+2]+'+abcd[3]+'*A[idx+3])/v255s).toFixed(1);',
-      'return v>0?(v>0.1?(v>0.2?(v>0.3?(v>0.4?(v>0.5?(v>0.6?(v>0.7?(v>0.8?9:8):7):6):5):4):3):2):1):0;};',
+      'f=function(A,idx){var v=+('+abcd[0]+'*A[idx]+'+abcd[1]+'*A[idx+1]+'+abcd[2]+'*A[idx+2]+'+abcd[3]+'*A[idx+3])/v255s;',
+      'return v>0.1?(v>0.2?(v>0.3?(v>0.4?(v>0.5?(v>0.6?(v>0.7?(v>0.8?(v>0.9?9:8):7):6):5):4):3):2):1):0;};',
       /*head part of eventlistener*/
       'slf.addEventListener(\'message\',function(e){d=e.data;',
       /*it converts RGBa-data into map data*/

@@ -105,5 +105,5 @@ function txtCell(wkScrpt,dataName,map1,map2){
   return F;
 }
 //=== examples ===
-//var y=txtCell('sample','txtCell_lifeGame.js');
-//var y=txtCell('sample','txtCell_lifeGame.js','000@111@000');
+//var y=txtCell('txtCell_lifeGame.js');
+//var y=txtCell('txtCell_lifeGame.js','sample','000@111@000');

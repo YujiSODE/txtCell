@@ -19,6 +19,7 @@
 *   - map1: the current data map.
 *   - map2: additional data map.
 *   - step: the current step.
+*   - dataName: name of a data set. timestamp is default value.
 *=== Method of returned function ===
 * - function run(maxStep): it simulates only "maxStep" steps.
 * === List of scripts for Web Worker ===
@@ -28,7 +29,7 @@
 function txtCell(wkScrpt,dataName,map1,map2){
   var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
       bd=slf.document.getElementsByTagName('body')[0],
-      I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0},
+      I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0,dataName:undefined},
       Div,Name,pStep,I=0,J=0,P,pRnd=0,step=0,dStep=0,max=0,tId,F,
       f,dMap,wkMsg;
   //element generator
@@ -68,13 +69,15 @@ function txtCell(wkScrpt,dataName,map1,map2){
   };
   //============================================================================
   dataName=!dataName?slf.Date():dataName;
+  //name of a data set
+  _Log.dataName=dataName;
   bd.id='body'+r9;
   Div=f('div','txtCell'+r9,bd.id),bd.removeAttribute('id');
   Name=f('p','pName'+r9,Div.id),Name.innerHTML='\"'+dataName+'\":\"'+wkScrpt+'\"';
   pStep=f('p','pStep'+r9,Div.id),pStep.innerHTML='step:0';
   //=== data mapping ===
   P=f('p','p'+r9,Div.id);
-  P.style.cssText='overflow:scroll;width:25vw;height:25vh;border:1px dashed #000f;resize:both;';
+  P.style.cssText='overflow:scroll;width:30vw;height:30vh;border:1px dashed #000f;resize:both;';
   //=== map data ===
   _Map=dMap(map1);
   _Log.map0=_Map;

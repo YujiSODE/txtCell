@@ -10,7 +10,7 @@
 /*=== Parameters ===
 * - wkScrpt: a filename of a script for Web Worker.
 * - [optional] dataName: name of a data set. timestamp is default value.
-* - [optional] map1 and map2: map data.
+* - [optional] map1 and map2: map data. random map with 0 or 1 (n x n data) is default value.
 *   map data = 'xxx...x@xxx...x@...'; x is integer between 0 to 9.
 *=== Returned function ===
 * - function(): function that returns Log object.
@@ -21,7 +21,7 @@
 *   - step: the current step.
 *   - dataName: name of a data set. timestamp is default value.
 *=== Method of returned function ===
-* - function run(maxStep): it simulates only "maxStep" steps.
+* - function run(maxStep): it simulates only "maxStep" steps. 1 is default value.
 * === List of scripts for Web Worker ===
 * - "Conway's Game of Life": 'txtCell_lifeGame.js'
 */
@@ -39,9 +39,9 @@ function txtCell(wkScrpt,dataName,map1,map2){
     //[optional] d='xxx...x@xxx...x@...'; x is integer between 0 to 9
     if(!d){
       //d=false: default random map with 0 or 1 (n x n data)
-      var n=slf.prompt('n x n data; n is between 2 to 10: n=?',3);
-      n=/^[1-9]|(?:10)$/.test(n)?+n:3;
-      n=(+n<2||+n>10)?3:n;
+      var n=slf.prompt('n x n data; n is between 2 to 100: n=?',50);
+      n=/^[1-9](?:[0-9]+)?$/.test(n)?+n:50;
+      n=(+n<2||+n>100)?50:n;
       I=0;
       while(I<n){
         J=0;

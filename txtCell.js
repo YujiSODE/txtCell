@@ -24,6 +24,7 @@
 * - function run(maxStep): it simulates only "maxStep" steps. 1 is default value.
 * === List of scripts for Web Worker ===
 * - "Conway's Game of Life": 'txtCell_lifeGame.js'
+* - "Growing life game": 'txtCell_growingLifeGame.js'
 */
 //============================================================================
 function txtCell(wkScrpt,dataName,map1,map2){

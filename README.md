@@ -21,6 +21,7 @@ The interface for text based Cellular Automaton.
 `function txtCell(wkScrpt,dataName,map1,map2)`
 
 ## 2.`imgMap.js`
+The interface to convert "map data" into canvas "image" or canvas "image" into "map data".
 ### Function
 `function imgMap(canvasId)`
 
@@ -38,7 +39,6 @@ Web Worker interfaces for Cellular Automaton.
   `[surrounding sum:012345678]`  
   `[_current cell=0:000100000]`  
   `[_current cell=1:002200000]`  
-  `[_current cell=2:003300000]`  
   `...`  
   `[_current cell=7:008800000]`  
   `[_current cell=8:009900000]`  

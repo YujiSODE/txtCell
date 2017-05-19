@@ -20,8 +20,11 @@
 *   - map2: additional data map.
 *   - step: the current step.
 *   - dataName: name of a data set. timestamp is default value.
+*   - stat: counted results expressed as an array.
+*     n-th element shows number of n. initial value is [0,0,0,0,0,0,0,0,0,0].
 *=== Method of returned function ===
 * - function run(maxStep): it simulates only "maxStep" steps. 1 is default value.
+* - function stat(): method to count result data of 0 to 9: _Log.map1. Returned value is an array; n-th element shows number of n.
 * === List of scripts for Web Worker ===
 * - "Conway's Game of Life": 'txtCell_lifeGame.js'
 * - "Growing life game": 'txtCell_growingLifeGame.js'
@@ -30,7 +33,7 @@
 function txtCell(wkScrpt,dataName,map1,map2){
   var slf=window,W,r9=slf.Math.random().toFixed(9).replace(/\./g,''),
       bd=slf.document.getElementsByTagName('body')[0],
-      I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0,dataName:undefined},
+      I=0,_Map,_Log={map0:undefined,map1:undefined,map2:undefined,step:0,dataName:undefined,stat:[0,0,0,0,0,0,0,0,0,0]},
       Div,Name,pStep,I=0,J=0,P,pRnd=0,step=0,dStep=0,max=0,tId,F,
       f,dMap,wkMsg;
   //element generator
@@ -105,6 +108,18 @@ function txtCell(wkScrpt,dataName,map1,map2){
     maxStep=/^[1-9](?:[0-9]+)?$/.test(maxStep)?maxStep:1;
     max=maxStep;
     wkMsg([P.innerHTML.replace(/<br>/g,'@'),map2]);
+  };
+  //method to count result data of 0 to 9: _Log.map1
+  //returned value is an array; n-th element shows number of n
+  F.stat=function(){
+    if(!!_Log.map1){
+      var S=[0,0,0,0,0,0,0,0,0,0],L=_Log.map1.replace(/@/,''),n=L.length,i=0;
+      while(i<n){
+        S[L[i]]+=1,i+=1;
+      }
+      _Log.stat=S;
+      return S;
+    }
   };
   return F;
 }

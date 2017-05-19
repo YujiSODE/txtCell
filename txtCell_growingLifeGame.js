@@ -8,6 +8,7 @@
 */
 //============================================================================
 //this is Web Worker interface for Cellular Automaton.
+//Growing life game
 //Growing life game is based on "Conway's Game of Life". A living cell grows from 1 to 9 by step.
 /*
 * <rule of "Growing life game">

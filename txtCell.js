@@ -24,7 +24,7 @@
 *     n-th element shows number of n. initial value is [0,0,0,0,0,0,0,0,0,0].
 *=== Method of returned function ===
 * - function run(maxStep): it simulates only "maxStep" steps. 1 is default value.
-* - function stat(): method to count result data of 0 to 9: _Log.map1. Returned value is an array; n-th element shows number of n.
+* - function stat(): method to count result data of 0 to 9: map1 in Log object. Returned value is an array; n-th element shows number of n.
 * === List of scripts for Web Worker ===
 * - "Conway's Game of Life": 'txtCell_lifeGame.js'
 * - "Growing life game": 'txtCell_growingLifeGame.js'

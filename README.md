@@ -19,23 +19,23 @@ The interface for text based Cellular Automaton.
 #### Function
 `function txtCell(wkScrpt[,dataName][,map1][,map2])`  
 Parameters
-- wkScrpt: a filename of a script for Web Worker.
-- [optional] dataName: name of a data set. timestamp is default value.
-- [optional] map1 and map2: map data. random map with 0 or 1 (n x n data) is default value.
+- `wkScrpt`: a filename of a script for Web Worker.
+- [optional] `dataName`: name of a data set. timestamp is default value.
+- [optional] `map1` and `map2`: map data. random map with 0 or 1 (n x n data) is default value.
 
 Returned function  
-- function(): function that returns Log object.  
+- `function()`: function that returns Log object.  
     Log object has following values:  
-    - map0: initial data map.
-    - map1: the current data map.
-    - map2: additional data map.
-    - step: the current step.
-    - dataName: name of a data set. timestamp is default value.
-    - stat: counted results expressed as an array. n-th element shows number of n. initial value is [0,0,0,0,0,0,0,0,0,0].  
+    - `map0`: initial data map.
+    - `map1`: the current data map.
+    - `map2`: additional data map.
+    - `step`: the current step.
+    - `dataName`: name of a data set. timestamp is default value.
+    - `stat`: counted results expressed as an array. n-th element shows number of n. initial value is [0,0,0,0,0,0,0,0,0,0].  
     
 Method of returned function  
-- function run(maxStep): it simulates only "maxStep" steps. 1 is default value.
-- function stat(): method to count result data of 0 to 9: map1 in Log object. Returned value is an array; n-th element shows number of n.
+- `function run(maxStep)`: it simulates only `maxStep` steps. 1 is default value.
+- `function stat()`: method to count result data of 0 to 9:`map1` in Log object. Returned value is an array; n-th element shows number of n.
 
 ### 2.`imgMap.js`
 The interface to convert "map data" into canvas "image" or canvas "image" into "map data".

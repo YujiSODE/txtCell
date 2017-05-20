@@ -7,7 +7,6 @@ https://github.com/YujiSODE/txtCell
 >See LICENSE or http://opensource.org/licenses/mit-license.php
 ______
 
-## Scripts and map data format
 ### Scripts
 1. `txtCell.js`: the interface for text based Cellular Automaton.
 2. `imgMap.js`: the interface to convert "map data" into canvas "image" or canvas "image" into "map data".
@@ -15,17 +14,17 @@ ______
 ### Map data format
 Map data:`'xxx...x@xxx...x@...'`;`x` is integer between 0 to 9.
 
-## 1.`txtCell.js`
+### 1.`txtCell.js`
 The interface for text based Cellular Automaton.
-### Function
+#### Function
 `function txtCell(wkScrpt,dataName,map1,map2)`
 
-## 2.`imgMap.js`
+### 2.`imgMap.js`
 The interface to convert "map data" into canvas "image" or canvas "image" into "map data".
-### Function
+#### Function
 `function imgMap(canvasId)`
 
-## 3.`txtCell_lifeGame.js` and `txtCell_growingLifeGame.js`
+### 3.`txtCell_lifeGame.js` and `txtCell_growingLifeGame.js`
 Web Worker interfaces for Cellular Automaton.  
 - "Conway's Game of Life":`txtCell_lifeGame.js`  
   Rule of "Conway's Game of Life"  
@@ -35,7 +34,7 @@ Web Worker interfaces for Cellular Automaton.
   
 - "Growing life game":`txtCell_growingLifeGame.js`  
   Growing life game is based on "Conway's Game of Life". A living cell grows from 1 to 9 by step.  
-  Rule of "Growing life game"
+  Rule of "Growing life game"  
   `[surrounding sum:012345678]`  
   `[_current cell=0:000100000]`  
   `[_current cell=1:002200000]`  

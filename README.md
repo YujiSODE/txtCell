@@ -8,9 +8,9 @@ https://github.com/YujiSODE/txtCell
 ______
 
 ### Scripts
-1. `txtCell.js`: the interface for text based Cellular Automaton.
-2. `imgMap.js`: the interface to convert "map data" into canvas "image" or canvas "image" into "map data".
-3. `txtCell_lifeGame.js` and `txtCell_growingLifeGame.js`: Web Worker interfaces for Cellular Automaton.
+1. [`txtCell.js`](#1txtcelljs): the interface for text based Cellular Automaton.
+2. [`imgMap.js`](#2imgmapjs): the interface to convert "map data" into canvas "image" or canvas "image" into "map data".
+3. [`txtCell_lifeGame.js` and `txtCell_growingLifeGame.js`](#3txtcell_lifegamejs-and-txtcell_growinglifegamejs): Web Worker interfaces for Cellular Automaton.
 ### Map data format
 Map data:`'xxx...x@xxx...x@...'`;`x` is integer between 0 to 9.
 

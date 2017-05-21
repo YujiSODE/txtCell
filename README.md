@@ -18,7 +18,7 @@ Map data:`'xxx...x@xxx...x@...'`;`x` is integer between 0 to 9.
 The interface for text based Cellular Automaton.
 #### Function
 `function txtCell(wkScrpt[,dataName][,map1][,map2])`  
-Parameters
+Parameters  
 - `wkScrpt`: a filename of a script for Web Worker.
 - [optional] `dataName`: name of a data set. timestamp is default value.
 - [optional] `map1` and `map2`: map data. random map with 0 or 1 (n x n data) is default value.
@@ -40,7 +40,29 @@ Method of returned function
 ### 2.`imgMap.js`
 The interface to convert "map data" into canvas "image" or canvas "image" into "map data".
 #### Function
-`function imgMap(canvasId)`
+`function imgMap(canvasId)`  
+Parameters  
+- canvasId: id of canvas tag; canvas tag is generated when there is not target tag.
+
+Returned function  
+- `function()`: function that returns Log Object.  
+  Log object has following values:  
+  - `canvasId`: id of target canvas tag.  
+    \-----------------------------------
+  - `inputMap`: input data map for method `map2Cvs(map)`.
+  - `mapImage`: data URI for input data map with method `map2Cvs(map)`.  
+    \-----------------------------------
+  - `outputMap`: output data map with method `cvs2Map(abcd)`.
+  - `abcd`: parameters to convert image into mapdata with method `cvs2Map(abcd)`.  
+    v=f(RGBa-value)=a*R+b*G+c*B+d*a.  
+    
+Method of returned function  
+- `function reset()`: method to reset Log Object.
+- `function map2Cvs(map)`: method to convert map data into canvas image; map is map data.  
+  "color chart" between blue(0) and red(9) is default output.
+- `function cvs2Map(abcd)`: method to convert canvas image into map data.  
+  `abcd` is a text expressing values a, b, c, and d that satisfies v=f(RGBa-value)=a*R+b*G+c*B+d*a;  
+  e.g., "1011" means v=1*R+0*G+1*B+1*a. "1110" is default value.  
 
 ### 3.`txtCell_lifeGame.js` and `txtCell_growingLifeGame.js`
 Web Worker interfaces for Cellular Automaton.  

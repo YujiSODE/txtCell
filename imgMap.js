@@ -21,7 +21,7 @@
 *   - abcd: parameters to convert image into mapdata with method cvs2Map(abcd).
 *     v=f(RGBa-value)=a*R+b*G+c*B+d*a.
 *=== Method of returned function ===
-* - function reset(): method to reset Log Object
+* - function reset(): method to reset Log Object.
 * - function map2Cvs(map): method to convert map data into canvas image; map is map data.
 *   "color chart" between blue(0) and red(9) is default output.
 * - function cvs2Map(abcd): method to convert canvas image into map data.

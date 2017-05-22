@@ -23,7 +23,8 @@
 * [_current cell=7:008800000]
 * [_current cell=8:009900000]
 * [_current cell=9:009900000]
-//cell with value of 9 means that it has lasted for 9 or more steps.
+* Cell with value of 9 means that it has lasted for 9 or more steps.
+* Cell with value 0 in map2 will be 0 if additional map: map2 is available
 */
 var slf=this,
     c={c0:0,c1:0,c2:0,c3:0,c4:0,c5:0,c6:0,c7:0,c8:0},
@@ -44,19 +45,36 @@ slf.addEventListener('message',function(e){
       * [c6|c7|c8]
       */
       c.c0=+d1[Y][X];
-      c.c1=(Y!=0&&X!=0)?+d1[Y-1][X-1]:0;
-      c.c2=(Y!=0)?+d1[Y-1][X]:0;
-      c.c3=(Y!=0&&X!=W-1)?+d1[Y-1][X+1]:0;
-      c.c4=(X!=0)?+d1[Y][X-1]:0;
-      c.c5=(X!=W-1)?+d1[Y][X+1]:0;
-      c.c6=(Y!=H-1&&X!=0)?+d1[Y+1][X-1]:0;
-      c.c7=(Y!=H-1)?+d1[Y+1][X]:0;
-      c.c8=(Y!=H-1&&X!=W-1)?+d1[Y+1][X+1]:0;
+      if(!d2){
+        //without additional map: map2
+        c.c1=(Y!=0&&X!=0)?+d1[Y-1][X-1]:0;
+        c.c2=(Y!=0)?+d1[Y-1][X]:0;
+        c.c3=(Y!=0&&X!=W-1)?+d1[Y-1][X+1]:0;
+        c.c4=(X!=0)?+d1[Y][X-1]:0;
+        c.c5=(X!=W-1)?+d1[Y][X+1]:0;
+        c.c6=(Y!=H-1&&X!=0)?+d1[Y+1][X-1]:0;
+        c.c7=(Y!=H-1)?+d1[Y+1][X]:0;
+        c.c8=(Y!=H-1&&X!=W-1)?+d1[Y+1][X+1]:0;
+      }else{
+        //with additional map: map2
+        c.c1=(Y!=0&&X!=0)?(+d2[Y-1][X-1]>0?+d1[Y-1][X-1]:0):0;
+        c.c2=(Y!=0)?(+d2[Y-1][X]>0?+d1[Y-1][X]:0):0;
+        c.c3=(Y!=0&&X!=W-1)?(+d2[Y-1][X+1]>0?+d1[Y-1][X+1]:0):0;
+        c.c4=(X!=0)?(+d2[Y][X-1]>0?+d1[Y][X-1]:0):0;
+        c.c5=(X!=W-1)?(+d2[Y][X+1]>0?+d1[Y][X+1]:0):0;
+        c.c6=(Y!=H-1&&X!=0)?(+d2[Y+1][X-1]>0?+d1[Y+1][X-1]:0):0;
+        c.c7=(Y!=H-1)?(+d2[Y+1][X]>0?+d1[Y+1][X]:0):0;
+        c.c8=(Y!=H-1&&X!=W-1)?(+d2[Y+1][X+1]>0?+d1[Y+1][X+1]:0):0;
+      }
       i=1,s=0;
       while(i<9){
         s+=+c['c'+i]>0?1:0,i+=1;
       }
-      P[Y]+=_rule[c.c0][s];
+      if(!d2){
+        P[Y]+=_rule[c.c0][s];
+      }else{
+        P[Y]+=+d2[Y][X]>0?_rule[c.c0][s]:0;
+      }
       X+=1;
     }
     Y+=1;

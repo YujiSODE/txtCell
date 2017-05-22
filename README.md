@@ -83,4 +83,4 @@ Web Worker interfaces for Cellular Automaton.
   `[_current cell=8:009900000]`  
   `[_current cell=9:009900000]`  
   A cell with value of 9 means that it has lasted for 9 or more steps.  
-  
+  A cell with value 0 in additional map will be 0 if additional is available.

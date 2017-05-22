@@ -67,14 +67,16 @@ Method of returned function
 ### 3.`txtCell_lifeGame.js` and `txtCell_growingLifeGame.js`
 Web Worker interfaces for Cellular Automaton.  
 - "Conway's Game of Life":`txtCell_lifeGame.js`  
-  Rule of "Conway's Game of Life"  
+  **Rule of "Conway's Game of Life"**  
   `[surrounding sum:012345678]`  
   `[_current cell=0:000100000]`  
   `[_current cell=1:001100000]`  
   
 - "Growing life game":`txtCell_growingLifeGame.js`  
-  Growing life game is based on "Conway's Game of Life". A living cell grows from 1 to 9 by step.  
-  Rule of "Growing life game"  
+  Growing life game is based on "Conway's Game of Life".  
+  A living cell grows from 1 to 9 by step. An additional map can be used  for limiting area;  
+  a cell with value of 0 in additional map is not habitable in this life game.  
+  **Rule of "Growing life game"**  
   `[surrounding sum:012345678]`  
   `[_current cell=0:000100000]`  
   `[_current cell=1:002200000]`  
@@ -83,4 +85,4 @@ Web Worker interfaces for Cellular Automaton.
   `[_current cell=8:009900000]`  
   `[_current cell=9:009900000]`  
   A cell with value of 9 means that it has lasted for 9 or more steps.  
-  
+  A cell with value 0 in additional map will be 0 if additional is available.

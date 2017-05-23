@@ -1,6 +1,7 @@
 # txtCell ![growingLifeGame_SS20170522_tri.png](https://cloud.githubusercontent.com/assets/19919184/26339311/1147321c-3fc2-11e7-87ee-54346ac74e91.png)  
 the interface for text based Cellular Automaton.  
-https://github.com/YujiSODE/txtCell
+https://github.com/YujiSODE/txtCell  
+wiki: https://github.com/YujiSODE/txtCell/wiki
 
 >Copyright (c) 2017 Yuji SODE \<yuji.sode@gmail.com\>  
 >This software is released under the MIT License.  

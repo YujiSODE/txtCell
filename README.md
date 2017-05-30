@@ -1,5 +1,5 @@
 # txtCell ![growingLifeGame_SS20170522_tri.png](https://cloud.githubusercontent.com/assets/19919184/26339311/1147321c-3fc2-11e7-87ee-54346ac74e91.png)  
-the interface for text based Cellular Automaton.  
+Interface for text based Cellular Automaton.  
 https://github.com/YujiSODE/txtCell  
 wiki: https://github.com/YujiSODE/txtCell/wiki
 
@@ -9,14 +9,14 @@ wiki: https://github.com/YujiSODE/txtCell/wiki
 ______
 
 ### Scripts
-1. [`txtCell.js`](#1txtcelljs): the interface for text based Cellular Automaton.
-2. [`imgMap.js`](#2imgmapjs): the interface to convert "map data" into canvas "image" or canvas "image" into "map data".
+1. [`txtCell.js`](#1txtcelljs): interface for text based Cellular Automaton.
+2. [`imgMap.js`](#2imgmapjs): interface to convert "map data" into canvas "image" or canvas "image" into "map data".
 3. [`txtCell_lifeGame.js` and `txtCell_growingLifeGame.js`](#3txtcell_lifegamejs-and-txtcell_growinglifegamejs): Web Worker interfaces for Cellular Automaton.
 ### Map data format
 Map data:`'xxx...x@xxx...x@...'`;`x` is integer between 0 to 9.
 
 ### 1.`txtCell.js`
-The interface for text based Cellular Automaton.
+Interface for text based Cellular Automaton.
 #### Function
 `function txtCell(wkScrpt[,dataName][,map1][,map2])`  
 Parameters  
@@ -39,7 +39,7 @@ Method of returned function
 - `function stat()`: method to count result data of 0 to 9:`map1` in Log object. Returned value is an array; n-th element shows number of n.
 
 ### 2.`imgMap.js`
-The interface to convert "map data" into canvas "image" or canvas "image" into "map data".
+Interface to convert "map data" into canvas "image" or canvas "image" into "map data".
 #### Function
 `function imgMap(canvasId)`  
 Parameters  

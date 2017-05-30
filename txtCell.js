@@ -6,7 +6,7 @@
 *    This software is released under the MIT License.
 *    See LICENSE or http://opensource.org/licenses/mit-license.php
 */
-//the interface for text based Cellular Automaton.
+//interface for text based Cellular Automaton.
 /*=== Parameters ===
 * - wkScrpt: a filename of a script for Web Worker.
 * - [optional] dataName: name of a data set. timestamp is default value.

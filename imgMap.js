@@ -6,7 +6,7 @@
 *    This software is released under the MIT License.
 *    See LICENSE or http://opensource.org/licenses/mit-license.php
 */
-//the interface to convert "map data" into canvas "image" or canvas "image" into "map data".
+//interface to convert "map data" into canvas "image" or canvas "image" into "map data".
 /*=== Parameters ===
 * - canvasId: id of canvas tag; canvas tag is generated when there is not target tag.
 *=== Returned function ===
